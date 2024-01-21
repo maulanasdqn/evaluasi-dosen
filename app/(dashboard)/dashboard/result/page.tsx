@@ -66,7 +66,7 @@ const DashboardResultPage: NextPage = (): ReactElement => {
         <DataTable
           data={data}
           columns={columns}
-          meta={{ totalPage: 10, page: 1, perPage: 10 }}
+          meta={{ totalPage: 5, page: 1, perPage: 5 }}
         />
       </div>
     </section>
