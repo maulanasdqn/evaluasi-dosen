@@ -4,7 +4,7 @@ import { ReactElement } from "react";
 
 const DashboardPage: NextPage = (): ReactElement => {
   return (
-    <section className="flex flex-col w-auto bg-white p-6 rounded-lg gap-y-4 mr-[300px] h-full overflow-x-hidden">
+    <section className="flex flex-col w-auto bg-white p-6 rounded-lg gap-y-4 h-full overflow-x-hidden">
       <div className="flex gap-x-2">
         <Typography color="text-grey-300">EDOM</Typography>
         <Typography color="text-grey-300"> / </Typography>

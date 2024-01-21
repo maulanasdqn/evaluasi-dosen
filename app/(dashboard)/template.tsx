@@ -6,7 +6,7 @@ const DashboardTemplate: FC<PropsWithChildren> = ({
   children,
 }): ReactElement => {
   return (
-    <section className="w-full xl:px-32 flex bg-grey-100 min-h-screen h-full ml-[250px] overflow-x-hidden">
+    <section className="w-full flex items-start justify-center px-6 bg-grey-100 min-h-screen h-full overflow-x-hidden">
       <Sidebar
         user={{
           id: "",
@@ -21,7 +21,9 @@ const DashboardTemplate: FC<PropsWithChildren> = ({
           },
         }}
       />
-      <div className="flex flex-col w-full h-auto p-4">{children}</div>
+      <div className="flex flex-col w-full max-w-[1200px] bg-white my-8 rounded-lg min-h-screen h-full px-4 ml-[254px]">
+        {children}
+      </div>
     </section>
   );
 };

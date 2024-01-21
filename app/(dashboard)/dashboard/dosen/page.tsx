@@ -53,7 +53,7 @@ const data = [
 
 const DashboardDosenPage: NextPage = (): ReactElement => {
   return (
-    <section className="flex flex-col mt-6 w-auto bg-white p-6 rounded-lg gap-y-4 mr-[300px] h-full overflow-x-hidden">
+    <section className="flex flex-col mt-6 w-auto bg-white p-6 rounded-lg gap-y-4 h-full overflow-x-hidden">
       <div className="flex gap-x-2">
         <Typography color="text-grey-300">EDOM</Typography>
         <Typography color="text-grey-300"> / </Typography>
@@ -81,7 +81,7 @@ const DashboardDosenPage: NextPage = (): ReactElement => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-4 grid-rows-4 gap-4">
+        <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-rows-4 gap-4">
           {data.map((x, i) => (
             <div
               key={i}
