@@ -6,7 +6,7 @@ const DashboardTemplate: FC<PropsWithChildren> = ({
   children,
 }): ReactElement => {
   return (
-    <section className="w-full flex bg-grey-50 min-h-screen h-full ml-[280px] overflow-x-hidden">
+    <section className="w-full xl:px-32 flex bg-grey-100 min-h-screen h-full ml-[250px] overflow-x-hidden">
       <Sidebar
         user={{
           id: "",

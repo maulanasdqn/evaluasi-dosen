@@ -25,7 +25,7 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
     clsx(
       "flex cursor-pointer items-center font-normal py-3 px-2 text-green-500 rounded-lg group hover:text-success-800 hover:shadow-md hover:bg-white",
       {
-        "bg-white shadow-md font-[600] text-white": pathname === url,
+        "bg-white shadow-md font-[600] text-green-500": pathname === url,
       },
     );
 
@@ -85,8 +85,8 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
           icon: (
             <PiUsersThreeFill className={iconClassName("/dashboard/user")} />
           ),
-          path: "/dashboard/user",
-          url: `/dashboard/user?title=Data Pengguna&isSidebarOpen=${isSidebarOpen}`,
+          path: "/dashboard/result",
+          url: `/dashboard/result`,
           permissions: ["Read Dosen"],
         },
       ],
@@ -196,29 +196,13 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
                 )}
               </Fragment>
             ))}
-            {hasCommonElements(["Read Setting"], user?.role?.permissions) && (
-              <li>
-                <Link
-                  href={`/dashboard/setting?title=Pengaturan&isSidebarOpen=${isSidebarOpen}&menu=account`}
-                  className={selectedMenu("/dashboard/setting")}
-                >
-                  <IoMdSettings
-                    className={iconClassName("/dashboard/setting")}
-                  />
-                  <span className="ms-3">Pengaturan</span>
-                </Link>
-              </li>
-            )}
           </ul>
         </div>
         <li className="cursor-pointer">
-          <span
-            onClick={() => setIsSidebarOpen("close")}
-            className={selectedMenu("")}
-          >
+          <div className={selectedMenu("")}>
             <IoMdLogOut className={iconClassName("")} />
             <Typography color="ms-3">Logout</Typography>
-          </span>
+          </div>
         </li>
       </div>
     </aside>

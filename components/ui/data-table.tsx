@@ -50,13 +50,13 @@ export const Pagination: FC<TPagination> = (props): ReactElement => {
 
   return (
     <div className="flex justify-start gap-x-2">
-      <Button onClick={() => setPage(1)} variant="secondary" size="sm">
+      <Button onClick={() => setPage(1)} variant="cancel" size="sm">
         {"<<"}
       </Button>
 
       <Button
         onClick={() => Number(page) > 1 && setPage(Number(page) - 1)}
-        variant="secondary"
+        variant="cancel"
         size="sm"
       >
         Prev
@@ -66,7 +66,7 @@ export const Pagination: FC<TPagination> = (props): ReactElement => {
         <Button
           onClick={() => setPage(startPage + i)}
           key={startPage + i}
-          variant={startPage + i === currentPage ? "secondary" : "primary"}
+          variant={startPage + i === currentPage ? "primary" : "cancel"}
           size="sm"
         >
           {startPage + i}
@@ -77,7 +77,7 @@ export const Pagination: FC<TPagination> = (props): ReactElement => {
         onClick={() =>
           Number(page) < Number(meta?.totalPage) && setPage(Number(page) + 1)
         }
-        variant="secondary"
+        variant="cancel"
         size="sm"
       >
         Next
@@ -85,7 +85,7 @@ export const Pagination: FC<TPagination> = (props): ReactElement => {
 
       <Button
         onClick={() => setPage(Number(meta?.totalPage))}
-        variant="secondary"
+        variant="cancel"
         size="sm"
       >
         {">>"}
@@ -108,7 +108,7 @@ export const DataTable = <T extends Record<string, any>>(
     onSortingChange: setSorting,
   });
   return (
-    <section className="shadow-md bg-white h-fit overflow-y-hidden border p-4 rounded-lg w-full gap-y-4 flex flex-col overflow-x-auto">
+    <section className="shadow-md bg-grey-50 h-fit overflow-y-hidden border p-4 rounded-lg w-full gap-y-4 flex flex-col overflow-x-auto">
       <div className="flex md:flex-row flex-col md:gap-x-3 gap-y-4 md:items-center sticky z-10 w-full">
         <div className="w-fit">
           <InputText
@@ -126,8 +126,11 @@ export const DataTable = <T extends Record<string, any>>(
         )}
       </div>
       <div className="overflow-x-auto min-w-max w-full h-fit flex p-1 bg-white shadow-md rounded-lg relative">
-        <table {...props} className="p-2 w-full">
-          <thead className="bg-green-500 p-2 w-auto h-auto rounded-lg">
+        <table
+          {...props}
+          className="p-2 w-full table-auto border-collapse rounded-lg"
+        >
+          <thead className="bg-green-500 p-2 w-auto h-auto">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
@@ -170,12 +173,9 @@ export const DataTable = <T extends Record<string, any>>(
           </thead>
           <tbody className="divide-y">
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
+              <tr key={row.id} className="even:bg-grey-100 odd:bg-grey-50">
                 {row.getVisibleCells().map((cell, index) => (
-                  <td
-                    key={index}
-                    className="border-b border-grey-200 p-4 text-grey-600 font-medium bg-white"
-                  >
+                  <td key={index} className="py-4 text-grey-600 font-medium">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
