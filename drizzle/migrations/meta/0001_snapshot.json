@@ -1,6 +1,6 @@
 {
-  "id": "3efad5c5-34b0-4ad4-b88a-db3ac4bd559a",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "265b498c-51b0-467d-ad78-375c1dbb2e17",
+  "prevId": "3efad5c5-34b0-4ad4-b88a-db3ac4bd559a",
   "version": "5",
   "dialect": "pg",
   "tables": {
@@ -314,6 +314,17 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "permissions": {
+          "name": "permissions",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": [
+            "Read Dosen",
+            "Read Setting",
+            "Dashboard"
+          ]
         },
         "emailVerified": {
           "name": "emailVerified",

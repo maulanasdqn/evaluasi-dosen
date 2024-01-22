@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const schema = z.object({
   email: z
@@ -32,9 +33,9 @@ export const FormLogin: FC = (): ReactElement => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    router.push("/dashboard");
+  const onSubmit = handleSubmit(async (data) => {
+    const login = await signIn("login", data, { redirect: false });
+    login?.ok && router.push("/dashboard");
   });
 
   return (

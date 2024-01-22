@@ -22,12 +22,7 @@ export type TUser = {
   fullname: string;
   image?: string;
   email: string;
-  isPasswordSet: boolean;
-  role: {
-    id: string;
-    name: string;
-    permissions: string[];
-  };
+  permissions: string[];
 };
 
 export type TMetaItem = {

@@ -13,7 +13,7 @@
     "seed": "tsx ./utils/seed.ts"
   },
   "dependencies": {
-    "@auth/drizzle-adapter": "^0.3.16",
+    "@auth/drizzle-adapter": "latest",
     "@hookform/resolvers": "^3.3.4",
     "@tanstack/react-query": "^5.17.19",
     "@tanstack/react-query-devtools": "^5.17.19",
@@ -25,7 +25,7 @@
     "bcryptjs": "^2.4.3",
     "clsx": "^2.1.0",
     "next": "14.1.0",
-    "next-auth": "^4.24.5",
+    "next-auth": "beta",
     "next-usequerystate": "latest",
     "pg": "^8.11.3",
     "react": "^18",

@@ -1,0 +1,1 @@
+ALTER TABLE "user" ADD COLUMN "permissions" text[] DEFAULT Read Dosen,Read Setting,Dashboard NOT NULL;
