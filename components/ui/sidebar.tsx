@@ -26,7 +26,7 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
       "flex cursor-pointer items-center font-normal py-3 px-2 text-green-500 rounded-lg group hover:text-success-800 hover:shadow-md hover:bg-white",
       {
         "bg-white shadow-md font-[600] text-green-500": pathname === url,
-      },
+      }
     );
 
   const sidebarClassName = clsx(
@@ -35,7 +35,7 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
       "translate-x-0":
         isSidebarOpen === "open" || isSidebarOpen === "null" || !isSidebarOpen,
       "-translate-x-full": isSidebarOpen === "close",
-    },
+    }
   );
 
   const iconClassName = (url: string) =>
@@ -45,7 +45,7 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
         "text-success-800 bg-white shadow-sm p-2 rounded-lg": pathname !== url,
 
         "text-white bg-green-500 p-2 rounded-lg": pathname === url,
-      },
+      }
     );
 
   const sidebarData = [
@@ -60,6 +60,15 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
           icon: <FaUserClock className={iconClassName("/dashboard/guest")} />,
           path: "/dashboard/dosen",
           url: `/dashboard/dosen`,
+          permissions: ["Read Dosen"],
+        },
+        {
+          name: "Hasil Evaluasi",
+          icon: (
+            <PiUsersThreeFill className={iconClassName("/dashboard/user")} />
+          ),
+          path: "/dashboard/result",
+          url: `/dashboard/result`,
           permissions: ["Read Dosen"],
         },
       ],
@@ -78,15 +87,6 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
           ),
           path: "/dashboard/question",
           url: `/dashboard/question`,
-          permissions: ["Read Dosen"],
-        },
-        {
-          name: "Hasil Evaluasi",
-          icon: (
-            <PiUsersThreeFill className={iconClassName("/dashboard/user")} />
-          ),
-          path: "/dashboard/result",
-          url: `/dashboard/result`,
           permissions: ["Read Dosen"],
         },
       ],
@@ -144,7 +144,7 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
               <Fragment key={index}>
                 {hasCommonElements(
                   item.permissions,
-                  user?.role?.permissions,
+                  user?.role?.permissions
                 ) && (
                   <li key={index}>
                     <div
@@ -164,7 +164,7 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
                           "flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75  group-hover:text-green-500",
                           {
                             "rotate-180": open === item.path,
-                          },
+                          }
                         )}
                       />
                     </div>
@@ -175,7 +175,7 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
                           <Fragment key={index}>
                             {hasCommonElements(
                               child.permissions,
-                              user?.role?.permissions,
+                              user?.role?.permissions
                             ) && (
                               <Link
                                 key={index}
