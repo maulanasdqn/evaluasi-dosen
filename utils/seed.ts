@@ -1,6 +1,7 @@
 import { db } from "@/server/connection";
 import { faker } from "@faker-js/faker";
-import { lectures, questions } from "@/drizzle/schema";
+import { lectures, questions, users } from "@/drizzle/schema";
+import * as bs from "bcryptjs";
 
 export const SeedLecturer = async () => {
   let dataToInsert = [];
@@ -9,6 +10,7 @@ export const SeedLecturer = async () => {
     let newData = {
       fullname: faker.person.fullName(),
       subjects: faker.person.jobTitle(),
+      image: faker.image.people(),
       nip: faker.phone.number(),
       grade: faker.helpers.arrayElement(["X", "XI", "XII"]),
       point: faker.helpers.arrayElement(["A", "B", "C"]),
@@ -66,5 +68,31 @@ export const SeedQuestion = async () => {
   console.log("Seeding Question! 🎊");
 };
 
+export const SeedUsers = async () => {
+  let dataToInsert = [];
+
+  const password = await bs.hash("admin123", 12);
+
+  for (let i = 0; i < 100; i++) {
+    let newData = {
+      fullname: faker.person.fullName(),
+      email: faker.internet.email(),
+      permissions: ["Read Dosen", "Dashboard"],
+      password,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    dataToInsert.push(newData);
+  }
+  console.log("Seeding Users... 🚀");
+  dataToInsert.forEach(async (data) => {
+    console.log("Inserting Users", data.fullname);
+    await db.insert(users).values(data).returning();
+  });
+  console.log("Seeding Users! 🎊");
+};
+
+SeedUsers();
 SeedLecturer();
 SeedQuestion();

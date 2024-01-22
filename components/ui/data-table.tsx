@@ -135,7 +135,7 @@ export const DataTable = <T extends Record<string, any>>(
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
-                    className="text-white p-2 text-left select-none"
+                    className="text-white py-2 px-4 text-left select-none"
                     key={header.id}
                   >
                     <div
@@ -175,7 +175,7 @@ export const DataTable = <T extends Record<string, any>>(
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id} className="even:bg-grey-100 odd:bg-grey-50">
                 {row.getVisibleCells().map((cell, index) => (
-                  <td key={index} className="py-4 text-grey-600 font-medium">
+                  <td key={index} className="p-4 text-grey-600 font-medium">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

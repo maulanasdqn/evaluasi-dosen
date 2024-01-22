@@ -1,43 +1,34 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import { users } from "@/drizzle/schema";
-import { db } from "@/server/connection";
-import { eq } from "drizzle-orm";
-import * as bs from "bcryptjs";
+import bcrypt from "bcryptjs";
+import * as z from "zod";
+import axios from "axios";
+import { TUser } from "@/entities";
+
+const LoginSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
 
 export const credentialProvider = CredentialsProvider({
-  id: "login",
-  name: "credentials",
-  credentials: {
-    email: { label: "Email", type: "text" },
-    password: { label: "Password", type: "password" },
-  },
-
   async authorize(credentials) {
-    if (!credentials?.email || !credentials.password) {
-      throw new Error("Email dan Password wajib diisi");
+    const validatedFields = LoginSchema.safeParse(credentials);
+
+    if (validatedFields.success) {
+      const { email, password } = validatedFields.data;
+
+      const { data: user } = await axios.get<TUser & { password: string }>(
+        process.env.NEXT_PUBLIC_API_URL + "/user/" + email,
+      );
+
+      console.log("User", user);
+
+      if (!user || !user?.password) return null;
+
+      const passwordsMatch = await bcrypt.compare(password, user.password);
+
+      if (passwordsMatch) return user;
     }
 
-    const user = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, credentials.email as string))
-      .then((res) => res.at(0));
-
-    const isPasswordCorrect = await bs.compare(
-      credentials.password as string,
-      user?.password as string,
-    );
-
-    if (!user || !isPasswordCorrect) {
-      throw new Error("Email atau Password salah");
-    }
-
-    return {
-      id: user?.id,
-      email: user?.email,
-      fullname: user?.fullname,
-      image: user?.image,
-      permissions: user?.permissions,
-    };
+    return null;
   },
 });

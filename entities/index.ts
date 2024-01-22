@@ -38,10 +38,9 @@ export type TMetaItem = {
 
 export const VSMetaRequest = z
   .object({
-    search: z.string(),
+    search: z.string().optional(),
     page: z.number(),
     perPage: z.number(),
-    isApproved: z.boolean().optional(),
   })
   .optional();
 

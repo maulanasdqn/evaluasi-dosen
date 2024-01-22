@@ -1,5 +1,5 @@
 import { DefaultSession } from "next-auth";
-import { TUser, TToken } from "@/entities";
+import { TUser } from "@/entities";
 export * from "next-auth__augment";
 
 declare module "next-auth" {

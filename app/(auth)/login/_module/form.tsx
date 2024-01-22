@@ -6,8 +6,7 @@ import { FC, ReactElement } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { AuthLogin } from "../action";
 
 const schema = z.object({
   email: z
@@ -18,8 +17,6 @@ const schema = z.object({
 });
 
 export const FormLogin: FC = (): ReactElement => {
-  const router = useRouter();
-
   const {
     control,
     handleSubmit,
@@ -34,8 +31,8 @@ export const FormLogin: FC = (): ReactElement => {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    const login = await signIn("login", data, { redirect: false });
-    login?.ok && router.push("/dashboard");
+    const login = await AuthLogin(data);
+    console.log("Login Data", login);
   });
 
   return (
@@ -61,7 +58,12 @@ export const FormLogin: FC = (): ReactElement => {
         message={errors?.password?.message}
         status={errors?.password?.message ? "error" : "none"}
       />
-      <Button disabled={!isValid} isFullWidth variant={"primary"} size={"sm"}>
+      <Button
+        disabled={!isValid}
+        isfullwidth={"true"}
+        variant={"primary"}
+        size={"sm"}
+      >
         Masuk
       </Button>
     </Form>

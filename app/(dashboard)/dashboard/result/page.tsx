@@ -1,50 +1,62 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { Typography } from "@/components/ui/typography";
+import { trpc } from "@/utils/trpc";
 import { ColumnDef } from "@tanstack/react-table";
 import { NextPage } from "next";
+import {
+  parseAsInteger,
+  parseAsString,
+  useQueryState,
+} from "next-usequerystate";
 import { ReactElement } from "react";
-
-const data = [
-  {
-    dimension: "Reability",
-    indicator: "Ketepatan Waktu Kuliah",
-    question:
-      "Apakah mengatakan waduh pada saat marah adalah tindakan yang bijak?",
-  },
-  {
-    dimension: "Reability",
-    question: "Angin Bawalah jiwaku melayang",
-    indicator: "Ketepatan Waktu Kuliah",
-  },
-  {
-    dimension: "Reability",
-    indicator: "Ketepatan Waktu Kuliah",
-    question: "Angin tancapkanlah busur panah cintaku",
-  },
-];
+import { FaEye } from "react-icons/fa";
 
 const DashboardResultPage: NextPage = (): ReactElement => {
+  const [page] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [search, setSearch] = useQueryState(
+    "search",
+    parseAsString.withDefault(""),
+  );
+  const { data } = trpc.getLecturers.useQuery({
+    page,
+    perPage: 5,
+    search,
+  });
   const columns: ColumnDef<any>[] = [
     {
-      header: "Dimensi",
-      accessorKey: "dimension",
+      header: "Nama Dosen",
+      accessorKey: "fullname",
     },
     {
-      header: "Indikator",
-      accessorKey: "indicator",
+      header: "Fakultas",
+      accessorKey: "faculty",
     },
-
     {
-      header: "Pertanyaan",
-      accessorKey: "question",
+      header: "Prodi",
+      accessorKey: "major",
+    },
+    {
+      header: "Grade",
+      accessorKey: "grade",
+    },
+    {
+      header: "Penilaian",
+      accessorKey: "point",
     },
 
     {
       header: "Tindakan",
       cell: () => {
-        return <span>Hapus | Edit</span>;
+        return (
+          <Button variant="border" size="sm">
+            <div className="flex gap-x-2 items-center">
+              <FaEye /> Lihat Detail
+            </div>
+          </Button>
+        );
       },
     },
   ];
@@ -53,7 +65,7 @@ const DashboardResultPage: NextPage = (): ReactElement => {
       <div className="flex gap-x-2">
         <Typography color="text-grey-300">EDOM</Typography>
         <Typography color="text-grey-300"> / </Typography>
-        <Typography color="text-grey-300"> Kelola Pertanyaan </Typography>
+        <Typography color="text-grey-300"> Kelola Dosen </Typography>
         <Typography color="text-grey-300"> / </Typography>
         <Typography color="text-success-800"> Hasil Evaluasi </Typography>
       </div>
@@ -64,9 +76,10 @@ const DashboardResultPage: NextPage = (): ReactElement => {
 
       <div className="flex flex-col h-full gap-y-6 mt-8">
         <DataTable
-          data={data}
+          data={data?.data || []}
           columns={columns}
-          meta={{ totalPage: 5, page: 1, perPage: 5 }}
+          meta={data?.meta}
+          handleSearch={(e) => setSearch(e.target.value)}
         />
       </div>
     </section>

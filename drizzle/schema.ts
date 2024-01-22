@@ -29,6 +29,7 @@ export const lectures = pgTable("lecture", {
   grade: text("grade"),
   point: text("point"),
   faculty: text("faculty"),
+  image: text("image"),
   major: text("major"),
   email: text("email").notNull().unique(),
   emailVerifiedAt: timestamp("emailVerified", { mode: "date" }),

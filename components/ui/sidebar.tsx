@@ -2,7 +2,7 @@
 import { FC, Fragment, ReactElement, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { clsx } from "clsx";
-import { IoMdDesktop, IoMdLogOut, IoMdSettings } from "react-icons/io";
+import { IoMdDesktop, IoMdLogOut } from "react-icons/io";
 import { AiFillCaretDown } from "react-icons/ai";
 import { FaUserClock } from "react-icons/fa";
 import { PiUsersThreeFill } from "react-icons/pi";
@@ -13,12 +13,12 @@ import { hasCommonElements } from "@/utils";
 import { FaUsersCog, FaUserEdit } from "react-icons/fa";
 import Avatar from "react-avatar";
 import { Typography } from "./typography";
+import { signOut } from "next-auth/react";
 
 export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
   const [isSidebarOpen, setIsSidebarOpen] = useQueryState("isSidebarOpen");
   const [open, setOpen] = useState("");
   const userName = useMemo(() => user?.fullname, [user]);
-  const roleName = useMemo(() => user?.role?.name, [user]);
   const pathname = usePathname();
 
   const selectedMenu = (url: string) =>
@@ -26,7 +26,7 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
       "flex cursor-pointer items-center font-normal py-3 px-2 text-green-500 rounded-lg group hover:text-success-800 hover:shadow-md hover:bg-white",
       {
         "bg-white shadow-md font-[600] text-green-500": pathname === url,
-      }
+      },
     );
 
   const sidebarClassName = clsx(
@@ -35,7 +35,7 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
       "translate-x-0":
         isSidebarOpen === "open" || isSidebarOpen === "null" || !isSidebarOpen,
       "-translate-x-full": isSidebarOpen === "close",
-    }
+    },
   );
 
   const iconClassName = (url: string) =>
@@ -45,7 +45,7 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
         "text-success-800 bg-white shadow-sm p-2 rounded-lg": pathname !== url,
 
         "text-white bg-green-500 p-2 rounded-lg": pathname === url,
-      }
+      },
     );
 
   const sidebarData = [
@@ -119,9 +119,6 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
                   <Typography variant="bold" color="text-success-800">
                     {userName}
                   </Typography>
-                  <Typography variant="reguler" color="text-success-800">
-                    {roleName}
-                  </Typography>
                 </div>
               </div>
             </Link>
@@ -129,7 +126,7 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
             <hr className="text-grey-300" />
           </div>
           <ul className="space-y-2 font-medium">
-            {hasCommonElements(["Dashboard"], user?.role?.permissions) && (
+            {hasCommonElements(["Dashboard"], user?.permissions) && (
               <li>
                 <Link
                   href={`/dashboard?title=Dashboard&isSidebarOpen=${isSidebarOpen}`}
@@ -142,10 +139,7 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
             )}
             {sidebarData.map((item, index) => (
               <Fragment key={index}>
-                {hasCommonElements(
-                  item.permissions,
-                  user?.role?.permissions
-                ) && (
+                {hasCommonElements(item.permissions, user?.permissions) && (
                   <li key={index}>
                     <div
                       onClick={() =>
@@ -164,7 +158,7 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
                           "flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75  group-hover:text-green-500",
                           {
                             "rotate-180": open === item.path,
-                          }
+                          },
                         )}
                       />
                     </div>
@@ -175,7 +169,7 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
                           <Fragment key={index}>
                             {hasCommonElements(
                               child.permissions,
-                              user?.role?.permissions
+                              user?.permissions,
                             ) && (
                               <Link
                                 key={index}
@@ -199,7 +193,7 @@ export const Sidebar: FC<{ user: TUser }> = ({ user }): ReactElement => {
           </ul>
         </div>
         <li className="cursor-pointer">
-          <div className={selectedMenu("")}>
+          <div onClick={() => signOut()} className={selectedMenu("")}>
             <IoMdLogOut className={iconClassName("")} />
             <Typography color="ms-3">Logout</Typography>
           </div>

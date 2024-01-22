@@ -1,0 +1,1 @@
+ALTER TABLE "lecture" ADD COLUMN "image" text;

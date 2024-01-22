@@ -1,20 +1,32 @@
-import { lectures, questions } from "@/drizzle/schema";
+import { lectures, questions, users } from "@/drizzle/schema";
 import { db } from "@/server/connection";
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { VSMetaRequest } from "@/entities";
 import { calculateTotalPages, metaResponsePrefix } from "@/utils";
 import { asc, ilike, or, and } from "drizzle-orm";
+import { eq } from "drizzle-orm";
+import { z } from "zod";
 
 const t = initTRPC.create({
   transformer: superjson,
 });
 
 export const appRouter = t.router({
+  getUserByEmail: t.procedure.input(z.string()).query(async ({ input }) => {
+    const data = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, input))
+      .then((res) => res[0]);
+    console.log("Data from middleware", data);
+    return data;
+  }),
+
   getLecturers: t.procedure.input(VSMetaRequest).query(async ({ input }) => {
     try {
       const page = input?.page || 1;
-      const perPage = input?.perPage || 10;
+      const perPage = input?.perPage || 8;
       const offset = (page - 1) * perPage;
 
       const data = await db

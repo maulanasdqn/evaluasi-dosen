@@ -12,12 +12,16 @@ const AuthTemplate: FC<PropsWithChildren> = ({ children }): ReactElement => {
             width={135}
             height={40}
             alt="logo uninus"
+            className="w-auto h-auto"
+            priority
           />
           <Image
             src="/img/hybrid.png"
+            className="w-auto h-auto"
             width={135}
             height={40}
             alt="logo hybrid"
+            priority
           />
         </figure>
         <div className="flex flex-col mt-[40px] items-center">

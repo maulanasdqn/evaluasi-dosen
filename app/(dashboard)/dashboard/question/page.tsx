@@ -2,30 +2,28 @@
 
 import { DataTable } from "@/components/ui/data-table";
 import { Typography } from "@/components/ui/typography";
+import { trpc } from "@/utils/trpc";
 import { ColumnDef } from "@tanstack/react-table";
 import { NextPage } from "next";
+import {
+  parseAsInteger,
+  parseAsString,
+  useQueryState,
+} from "next-usequerystate";
 import { ReactElement } from "react";
 
-const data = [
-  {
-    dimension: "Reability",
-    indicator: "Ketepatan Waktu Kuliah",
-    question:
-      "Apakah mengatakan waduh pada saat marah adalah tindakan yang bijak?",
-  },
-  {
-    dimension: "Reability",
-    question: "Angin Bawalah jiwaku melayang",
-    indicator: "Ketepatan Waktu Kuliah",
-  },
-  {
-    dimension: "Reability",
-    indicator: "Ketepatan Waktu Kuliah",
-    question: "Angin tancapkanlah busur panah cintaku",
-  },
-];
-
 const DashboardDosenPage: NextPage = (): ReactElement => {
+  const [page] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [search, setSearch] = useQueryState(
+    "search",
+    parseAsString.withDefault(""),
+  );
+  const { data } = trpc.getQuestions.useQuery({
+    perPage: 5,
+    page,
+    search,
+  });
+
   const columns: ColumnDef<any>[] = [
     {
       header: "Dimensi",
@@ -39,6 +37,7 @@ const DashboardDosenPage: NextPage = (): ReactElement => {
     {
       header: "Pertanyaan",
       accessorKey: "question",
+      accessorFn: (data) => data.question || "-",
     },
 
     {
@@ -66,9 +65,10 @@ const DashboardDosenPage: NextPage = (): ReactElement => {
         <DataTable
           createLink="/"
           createLabel="Tambah Pertanyaan +"
-          data={data}
+          data={data?.data || []}
           columns={columns}
-          meta={{ totalPage: 10, page: 1, perPage: 10 }}
+          meta={data?.meta}
+          handleSearch={(e) => setSearch(e.target.value)}
         />
       </div>
     </section>
