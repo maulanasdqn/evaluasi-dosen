@@ -5,20 +5,23 @@ import { DataTable } from "@/components/ui/data-table";
 import { Typography } from "@/components/ui/typography";
 import { trpc } from "@/utils/trpc";
 import { ColumnDef } from "@tanstack/react-table";
+import { Modal } from "@/components/ui/modal";
 import { NextPage } from "next";
 import {
   parseAsInteger,
   parseAsString,
   useQueryState,
 } from "next-usequerystate";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { FaEye } from "react-icons/fa";
+import { ReportChart } from "@/components/ui/chart/report-chart";
 
 const DashboardResultPage: NextPage = (): ReactElement => {
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [modal, setModal] = useState(false);
   const [search, setSearch] = useQueryState(
     "search",
-    parseAsString.withDefault(""),
+    parseAsString.withDefault("")
   );
   const { data } = trpc.getLecturers.useQuery({
     page,
@@ -51,7 +54,7 @@ const DashboardResultPage: NextPage = (): ReactElement => {
       header: "Tindakan",
       cell: () => {
         return (
-          <Button variant="border" size="sm">
+          <Button onClick={() => setModal(true)} variant="border" size="sm">
             <div className="flex gap-x-2 items-center">
               <FaEye /> Lihat Detail
             </div>
@@ -82,6 +85,15 @@ const DashboardResultPage: NextPage = (): ReactElement => {
           handleSearch={(e) => setSearch(e.target.value)}
         />
       </div>
+      <Modal
+        isOpen={modal}
+        onClose={() => setModal(!modal)}
+        width="400px"
+        height="auto"
+        title="Hasil Evaluasi"
+      >
+        <ReportChart />
+      </Modal>
     </section>
   );
 };
