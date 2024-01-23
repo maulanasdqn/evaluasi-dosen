@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Pagination } from "@/components/ui/data-table";
 import { InputText } from "@/components/ui/input-text";
 import { Typography } from "@/components/ui/typography";
+import { Modal } from "@/components/ui/modal";
 import { trpc } from "@/utils/trpc";
 import { NextPage } from "next";
 import {
@@ -10,7 +11,7 @@ import {
   parseAsString,
   useQueryState,
 } from "next-usequerystate";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import Image from "next/image";
 
 const DashboardDosenPage: NextPage = (): ReactElement => {

@@ -12,6 +12,13 @@ const t = initTRPC.create({
   transformer: superjson,
 });
 
+export const createQuestionSchema = z.object({
+  question: z.string(),
+  dimension: z.string(),
+  indicator: z.string(),
+  id: z.string().optional(),
+});
+
 export const appRouter = t.router({
   getUserByEmail: t.procedure.input(z.string()).query(async ({ input }) => {
     const data = await db
@@ -20,6 +27,43 @@ export const appRouter = t.router({
       .where(eq(users.email, input))
       .then((res) => res[0]);
     console.log("Data from middleware", data);
+    return data;
+  }),
+
+  createQuestion: t.procedure
+    .input(createQuestionSchema)
+    .mutation(async ({ input }) => {
+      const data = await db
+        .insert(questions)
+        .values({
+          question: input.question,
+          dimension: input.dimension,
+          indicator: input.indicator,
+        })
+        .returning();
+      return data;
+    }),
+
+  updateQuestion: t.procedure
+    .input(createQuestionSchema)
+    .mutation(async ({ input }) => {
+      const data = await db
+        .update(questions)
+        .set({
+          question: input.question,
+          dimension: input.dimension,
+          indicator: input.indicator,
+        })
+        .where(eq(questions.id, input.id as string))
+        .returning();
+      return data;
+    }),
+
+  deleteQuestion: t.procedure.input(z.string()).mutation(async ({ input }) => {
+    const data = await db
+      .delete(questions)
+      .where(eq(questions.id, input))
+      .returning();
     return data;
   }),
 

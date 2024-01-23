@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState } from "react";
+import { FC, MouseEventHandler, ReactElement, useState } from "react";
 import { InputText } from "./input-text";
 import { Button } from "./button";
 import { TMetaItem } from "@/entities";
@@ -22,6 +22,7 @@ export type TTable<T extends Record<string, any>> = DetailedHTMLProps<
   createLabel?: string;
   data: Array<T>;
   columns: ColumnDef<T>[];
+  createAction?: MouseEventHandler<HTMLButtonElement>;
 };
 
 export type TPagination = {
@@ -120,6 +121,14 @@ export const DataTable = <T extends Record<string, any>>(
         {props.createLink && (
           <div>
             <Button href={props.createLink} variant="primary" size="sm">
+              {props.createLabel}
+            </Button>
+          </div>
+        )}
+
+        {props.createAction && (
+          <div>
+            <Button onClick={props.createAction} variant="primary" size="sm">
               {props.createLabel}
             </Button>
           </div>

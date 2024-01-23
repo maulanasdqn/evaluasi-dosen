@@ -41,7 +41,7 @@ export const SeedQuestion = async () => {
 
   for (let i = 0; i < 100; i++) {
     let newData = {
-      questions: faker.lorem.sentence(),
+      question: faker.lorem.sentence(),
       dimension: faker.helpers.arrayElement([
         "Kognitif",
         "Sosial",
@@ -62,7 +62,7 @@ export const SeedQuestion = async () => {
   }
   console.log("Seeding Question... 🚀");
   dataToInsert.forEach(async (data) => {
-    console.log("Inserting Question", data.questions);
+    console.log("Inserting Question", data.question);
     await db.insert(questions).values(data).returning();
   });
   console.log("Seeding Question! 🎊");
@@ -93,6 +93,4 @@ export const SeedUsers = async () => {
   console.log("Seeding Users! 🎊");
 };
 
-SeedUsers();
-SeedLecturer();
 SeedQuestion();

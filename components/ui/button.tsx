@@ -12,7 +12,7 @@ type TButton = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 > & {
-  variant: "primary" | "secondary" | "cancel" | "border";
+  variant: "primary" | "secondary" | "cancel" | "border" | "danger";
   size: "sm" | "md" | "lg";
   isLoading?: boolean;
   isfullwidth?: string;
@@ -23,10 +23,11 @@ export const Button: FC<TButton> = (props): ReactElement => {
   const className = clsx(
     "cursor-pointer rounded-lg h-fit disabled:bg-grey-200 disabled:text-white disabled:cursor-not-allowed",
     {
+      "bg-error-500 hover:bg-error-600 text-white": props.variant === "danger",
       "bg-green-pea-200 hover:bg-green-pea-300": props.variant === "secondary",
       "bg-transparent border text-green-500 font-medium border-green-500":
         props.variant === "border",
-      "bg-green-500": props.variant === "primary",
+      "bg-green-500 text-white hover:bg-green-400": props.variant === "primary",
       "bg-white border border-grey-500 text-grey-500":
         props.variant === "cancel",
     },
