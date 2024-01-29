@@ -16,6 +16,7 @@ import Image from "next/image";
 
 const DashboardDosenPage: NextPage = (): ReactElement => {
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [modal, setModal] = useState(false);
   const [search, setSearch] = useQueryState(
     "search",
     parseAsString.withDefault(""),
@@ -41,15 +42,7 @@ const DashboardDosenPage: NextPage = (): ReactElement => {
 
       <div className="flex flex-col h-full gap-y-6 mt-8 py-4 items-center">
         <div className="flex w-full items-center">
-          <div className="w-1/4">
-            <Typography color="text-grey-800">Fakultas / Prodi</Typography>
-          </div>
-
-          <div className="flex gap-x-4 w-full">
-            <div className="w-1/2">
-              <InputText size="sm" placeholder="Pilih Prodi / Fakultas" />
-            </div>
-
+          <div className="flex gap-x-4 w-full justify-end">
             <div className="w-1/2">
               <InputText
                 type="search"
@@ -97,7 +90,7 @@ const DashboardDosenPage: NextPage = (): ReactElement => {
                 </div>
               </div>
               <div className="flex w-full justify-center items-center">
-                <Button variant={"primary"} size={"sm"}>
+                <Button onClick={() => setModal(true)} variant={"primary"} size={"sm"}>
                   Lihat Detail
                 </Button>
               </div>
@@ -114,6 +107,17 @@ const DashboardDosenPage: NextPage = (): ReactElement => {
           </div>
         )}
       </div>
+      <Modal
+        isOpen={modal}
+        onClose={() => setModal(!modal)}
+        width="400px"
+        height="auto"
+        title="Hasil Evaluasi"
+      >
+        <div>
+          Nama : s
+        </div>
+      </Modal>
     </section>
   );
 };

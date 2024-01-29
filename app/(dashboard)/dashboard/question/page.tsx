@@ -33,7 +33,7 @@ const createQuestionSchema = z.object({
   id: z.string().optional(),
 });
 
-const DashboardDosenPage: NextPage = (): ReactElement => {
+const DashboardQuestionPage: NextPage = (): ReactElement => {
   const { mutate } = trpc.createQuestion.useMutation();
   const { mutate: mutateUpdate } = trpc.updateQuestion.useMutation();
   const { mutate: mutateDelete } = trpc.deleteQuestion.useMutation();
@@ -119,11 +119,21 @@ const DashboardDosenPage: NextPage = (): ReactElement => {
         });
         setModal(false);
         refetch();
+        reset({
+          question: "",
+          indicator: "",
+          dimension: "",
+        });
       },
 
       onError: () => {
         notifyMessage({ type: "error", message: "Pertanyaan gagal ditambah" });
         setModal(false);
+        reset({
+          question: "",
+          indicator: "",
+          dimension: "",
+        });
       },
     });
   });
@@ -137,11 +147,21 @@ const DashboardDosenPage: NextPage = (): ReactElement => {
         });
         setModalUpdate(false);
         refetch();
+        reset({
+          question: "",
+          indicator: "",
+          dimension: "",
+        });
       },
 
       onError: () => {
         notifyMessage({ type: "error", message: "Pertanyaan gagal diedit" });
         setModalUpdate(false);
+        reset({
+          question: "",
+          indicator: "",
+          dimension: "",
+        });
       },
     });
   });
@@ -353,4 +373,4 @@ const DashboardDosenPage: NextPage = (): ReactElement => {
   );
 };
 
-export default DashboardDosenPage;
+export default DashboardQuestionPage;

@@ -6,7 +6,8 @@ import { FC, ReactElement } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AuthLogin } from "../action";
+import { AuthLogin } from "../_actions";
+import { notifyMessage } from "@/utils";
 
 const schema = z.object({
   email: z
@@ -32,7 +33,7 @@ export const FormLogin: FC = (): ReactElement => {
 
   const onSubmit = handleSubmit(async (data) => {
     const login = await AuthLogin(data);
-    console.log("Login Data", login);
+    notifyMessage({ type: "error", message: login?.error });
   });
 
   return (

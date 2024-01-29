@@ -12,15 +12,15 @@ export const SeedLecturer = async () => {
       subjects: faker.person.jobTitle(),
       image: faker.image.people(),
       nip: faker.phone.number(),
-      grade: faker.helpers.arrayElement(["X", "XI", "XII"]),
-      point: faker.helpers.arrayElement(["A", "B", "C"]),
-      faculty: faker.helpers.arrayElement([
-        "Fakultas Ilmu Komputer",
-        "Fakultas Teknik",
-        "Fakultas Hukum",
-        "Fakultas Teknik Elektro",
+      grade: faker.helpers.arrayElement([
+        "Baik",
+        "Sangat Baik",
+        "Buruk",
+        "Sangat Buruk",
       ]),
-      major: faker.helpers.arrayElement(["S1", "S2", "S3"]),
+      point: faker.helpers.arrayElement(["70", "80", "90", "60"]),
+      faculty: faker.helpers.arrayElement(["Fakultas Teknik"]),
+      major: faker.helpers.arrayElement(["Informatika", "Industri", "Elektro"]),
       email: faker.internet.email(),
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -93,4 +93,5 @@ export const SeedUsers = async () => {
   console.log("Seeding Users! 🎊");
 };
 
-SeedQuestion();
+SeedLecturer();
+SeedUsers();

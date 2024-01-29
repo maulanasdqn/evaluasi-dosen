@@ -45,7 +45,7 @@ export const inputClassName = ({
         status === "error",
       "border-orange-400 placeholder:text-orange-400 text-orange-400 bg-orange-100":
         status === "warning",
-    }
+    },
   );
 
 export function hasCommonElements<T>(arr1: T[], arr2: T[]): boolean {
@@ -97,7 +97,7 @@ export const metaResponsePrefix = <T>({
 
 export function calculateTotalPages(
   totalItems: number,
-  itemsPerPage: number
+  itemsPerPage: number,
 ): number {
   return Math.ceil(totalItems / itemsPerPage);
 }
@@ -106,7 +106,7 @@ export const notifyMessage = ({
   message,
   type = "success",
 }: {
-  message: string;
+  message?: string;
   type: "success" | "error";
 }) =>
   toast(message, {

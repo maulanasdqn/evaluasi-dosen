@@ -16,13 +16,12 @@ export const AuthLogin = async ({
       redirectTo: "/dashboard",
     });
   } catch (error) {
-    console.log(error);
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { error: "Invalid credentials!" };
+          return { error: "Email atau kata sandi tidak valid" };
         default:
-          return { error: "Something went wrong!" };
+          return { error: "Terjadi kesalahan" };
       }
     }
 
