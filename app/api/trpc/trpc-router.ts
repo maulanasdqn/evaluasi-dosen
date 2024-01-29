@@ -26,7 +26,6 @@ export const appRouter = t.router({
       .from(users)
       .where(eq(users.email, input))
       .then((res) => res[0]);
-    console.log("Data from middleware", data);
     return data;
   }),
 
