@@ -90,7 +90,11 @@ const DashboardDosenPage: NextPage = (): ReactElement => {
                 </div>
               </div>
               <div className="flex w-full justify-center items-center">
-                <Button onClick={() => setModal(true)} variant={"primary"} size={"sm"}>
+                <Button
+                  onClick={() => setModal(true)}
+                  variant={"primary"}
+                  size={"sm"}
+                >
                   Lihat Detail
                 </Button>
               </div>
@@ -114,9 +118,7 @@ const DashboardDosenPage: NextPage = (): ReactElement => {
         height="auto"
         title="Hasil Evaluasi"
       >
-        <div>
-          Nama : s
-        </div>
+        <div>Nama : s</div>
       </Modal>
     </section>
   );
