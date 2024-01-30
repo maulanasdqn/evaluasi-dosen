@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   images: {
     remotePatterns: [
       {
@@ -25,7 +26,7 @@ const nextConfig = {
     return [
       {
         source: "/",
-        destination: "/auth/login",
+        destination: "/login",
         permanent: true,
       },
     ];

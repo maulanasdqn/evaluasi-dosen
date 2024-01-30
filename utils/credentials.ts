@@ -1,12 +1,33 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import * as z from "zod";
-import { getApiUserByEmail } from "@/server/action";
+import axios, { AxiosRequestConfig } from "axios";
+import { TUser } from "@/entities";
 
 const LoginSchema = z.object({
   email: z.string().email(),
   password: z.string(),
 });
+
+type TUserWithPassword = TUser & {
+  password: string;
+};
+
+const config: AxiosRequestConfig = {
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+};
+
+const api = axios.create(config);
+
+export const getApiUserByEmail = async (
+  email: string,
+): Promise<TUserWithPassword> => {
+  const { data } = await api<TUserWithPassword>({
+    url: `/users/${email}`,
+    method: "GET",
+  });
+  return data;
+};
 
 export const credentialProvider = CredentialsProvider({
   async authorize(credentials) {

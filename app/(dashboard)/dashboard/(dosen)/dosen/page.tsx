@@ -118,8 +118,9 @@ const DashboardDosenPage: NextPage = (): ReactElement => {
         height="auto"
         title="Hasil Evaluasi"
       >
-        <div>Nama : s</div>
+        <span>Waduh</span>
       </Modal>
+      <div>Nama : s</div>
     </section>
   );
 };
